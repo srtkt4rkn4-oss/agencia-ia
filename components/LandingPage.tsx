@@ -149,14 +149,14 @@ function SectionTitle({
 }) {
   return (
     <div className="max-w-2xl">
-      <p className={`text-sm font-semibold uppercase tracking-[0.2em] ${light ? "text-slate-400" : "text-slate-500"}`}>
+      <p className={`text-sm font-semibold uppercase tracking-[0.2em] ${light ? "text-blue-200/70" : "text-gray-500"}`}>
         {eyebrow}
       </p>
-      <h2 className={`mt-3 text-3xl font-semibold sm:text-4xl ${light ? "text-white" : ""}`}>
+      <h2 className={`mt-3 text-3xl font-semibold sm:text-4xl ${light ? "text-white" : "text-navy"}`}>
         {title}
       </h2>
       {description ? (
-        <p className={`mt-4 text-lg ${light ? "text-slate-300" : "text-slate-600"}`}>
+        <p className={`mt-4 text-lg ${light ? "text-blue-100/80" : "text-gray-500"}`}>
           {description}
         </p>
       ) : null}
@@ -290,22 +290,22 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
+    <div className="min-h-screen bg-cold-white font-sans text-navy">
 
       {/* ── NAV ── */}
       <motion.header
         className="sticky top-0 z-50"
         animate={{
-          backgroundColor: navScrolled ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0)",
-          borderBottomColor: navScrolled ? "rgba(226,232,240,0.8)" : "rgba(226,232,240,0)",
+          backgroundColor: navScrolled ? "rgba(255,255,255,0.92)" : "rgba(248,249,252,0)",
+          borderBottomColor: navScrolled ? "rgba(229,231,235,0.8)" : "rgba(229,231,235,0)",
           backdropFilter: navScrolled ? "blur(12px)" : "blur(0px)",
         }}
         transition={{ duration: 0.3, ease: "easeOut" }}
         style={{ borderBottomWidth: 1, borderBottomStyle: "solid" }}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
-          <div className="text-xl font-semibold tracking-tight">
-            Agenc<span className="text-slate-500">IA</span>
+          <div className="text-xl font-semibold tracking-tight text-navy">
+            Agenc<span className="text-gray-400">IA</span>
           </div>
           <nav className="hidden gap-6 text-sm md:flex">
             {(
@@ -322,12 +322,12 @@ export default function LandingPage() {
                   key={id}
                   href={`#${id}`}
                   className={`relative py-1 transition-colors duration-200 ${
-                    isActive ? "text-slate-900" : "text-slate-600 hover:text-slate-900"
+                    isActive ? "text-navy" : "text-gray-500 hover:text-navy"
                   }`}
                 >
                   {label}
                   {isActive && (
-                    <span className="absolute -bottom-0.5 left-1/2 h-[3px] w-[3px] -translate-x-1/2 rounded-full bg-slate-900" />
+                    <span className="absolute -bottom-0.5 left-1/2 h-[3px] w-[3px] -translate-x-1/2 rounded-full bg-navy" />
                   )}
                 </a>
               );
@@ -335,7 +335,7 @@ export default function LandingPage() {
           </nav>
           <a
             href="#contacto"
-            className="rounded-2xl bg-slate-900 px-4 py-2 text-sm font-medium text-white"
+            className="rounded-md bg-navy px-4 py-2 text-sm font-medium text-white transition hover:bg-navy-mid"
           >
             Hablar ahora
           </a>
@@ -343,12 +343,12 @@ export default function LandingPage() {
       </motion.header>
 
       {/* ── HERO ── */}
-      <section className="relative overflow-hidden border-b border-slate-200">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-slate-100" />
+      <section className="relative overflow-hidden border-b border-gray-200">
+        <div className="absolute inset-0 bg-gradient-to-br from-cold-white via-white to-gray-100" />
         <div className="relative mx-auto max-w-7xl px-6 py-14 lg:px-8 lg:py-20">
           <div className="max-w-4xl">
             <motion.div
-              className="mb-6 inline-flex rounded-full border border-slate-200 bg-white px-4 py-2 text-sm shadow-sm"
+              className="mb-6 inline-flex rounded-full border border-gray-200 bg-white px-4 py-2 text-sm text-gray-500 shadow-sm"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0 }}
@@ -357,18 +357,18 @@ export default function LandingPage() {
             </motion.div>
 
             <motion.h1
-              className="max-w-4xl text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl"
+              className="max-w-4xl text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl text-navy"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
             >
               AgencIA convierte tareas repetitivas en sistemas{" "}
-              <span className="text-blue-600">automáticos</span> que hacen
+              <span className="text-navy-mid">automáticos</span> que hacen
               crecer tu empresa.
             </motion.h1>
 
             <motion.p
-              className="mt-6 max-w-2xl text-lg leading-8 text-slate-600"
+              className="mt-6 max-w-2xl text-lg text-gray-500"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
@@ -386,13 +386,13 @@ export default function LandingPage() {
             >
               <a
                 href="#contacto"
-                className="rounded-2xl bg-slate-900 px-6 py-3 text-sm font-medium text-white shadow-lg transition hover:-translate-y-px"
+                className="rounded-md bg-navy px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-navy-mid hover:-translate-y-px"
               >
                 Solicitar diagnóstico
               </a>
               <a
                 href="#servicios"
-                className="rounded-2xl border border-slate-300 px-6 py-3 text-sm font-medium text-slate-900 transition hover:bg-slate-50"
+                className="rounded-md border border-navy px-6 py-3 text-sm font-medium text-navy transition hover:bg-gray-100"
               >
                 Ver servicios
               </a>
@@ -404,21 +404,21 @@ export default function LandingPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.6 }}
             >
-              <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                <p className="text-2xl font-semibold">-40%</p>
-                <p className="mt-1 text-sm text-slate-600">
+              <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+                <p className="text-2xl font-semibold text-navy">-40%</p>
+                <p className="mt-1 text-sm text-gray-500">
                   Tiempo operativo en tareas repetitivas
                 </p>
               </div>
-              <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                <p className="text-2xl font-semibold">24/7</p>
-                <p className="mt-1 text-sm text-slate-600">
+              <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+                <p className="text-2xl font-semibold text-navy">24/7</p>
+                <p className="mt-1 text-sm text-gray-500">
                   Automatizaciones activas y monitorizadas
                 </p>
               </div>
-              <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                <p className="text-2xl font-semibold">4 sem.</p>
-                <p className="mt-1 text-sm text-slate-600">
+              <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+                <p className="text-2xl font-semibold text-navy">4 sem.</p>
+                <p className="mt-1 text-sm text-gray-500">
                   Hasta ver el primer resultado medible en tu negocio
                 </p>
               </div>
@@ -440,28 +440,28 @@ export default function LandingPage() {
           {services.map((service) => (
             <StaggerCard
               key={service.title}
-              className="rounded-3xl border border-slate-200 p-8 shadow-sm"
+              className="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm"
             >
-              <div className="text-slate-400">{service.icon}</div>
-              <h3 className="mt-4 text-xl font-semibold">{service.title}</h3>
-              <p className="mt-3 leading-7 text-slate-600">{service.text}</p>
+              <div className="text-gray-400">{service.icon}</div>
+              <h3 className="mt-4 text-xl font-semibold text-navy">{service.title}</h3>
+              <p className="mt-3 text-gray-500">{service.text}</p>
             </StaggerCard>
           ))}
         </StaggerGrid>
       </section>
 
       {/* ── CASOS DE USO ── */}
-      <section className="bg-slate-950 text-white">
+      <section className="bg-navy-mid text-white">
         <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
             <FadeInWhenVisible>
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-200/70">
                 Casos de uso
               </p>
-              <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">
+              <h2 className="mt-3 text-3xl font-semibold sm:text-4xl text-white">
                 Áreas donde la automatización con IA genera valor rápido
               </h2>
-              <p className="mt-4 max-w-xl leading-7 text-slate-300">
+              <p className="mt-4 max-w-xl text-blue-100/80">
                 Empezamos por microprocesos concretos: tareas pequeñas,
                 repetitivas y frecuentes donde la mejora se nota desde las
                 primeras semanas.
@@ -473,7 +473,7 @@ export default function LandingPage() {
                   key={item}
                   className="rounded-2xl border border-white/10 bg-white/5 p-5"
                 >
-                  <p className="font-medium">{item}</p>
+                  <p className="font-medium text-white">{item}</p>
                 </StaggerCard>
               ))}
             </StaggerGrid>
@@ -487,10 +487,10 @@ export default function LandingPage() {
           {metrics.map((item) => (
             <StaggerCard
               key={item.value}
-              className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm"
+              className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm"
             >
-              <p className="text-4xl font-bold tracking-tight">{item.value}</p>
-              <p className="mt-3 text-sm leading-6 text-slate-600">{item.description}</p>
+              <p className="text-4xl font-bold tracking-tight text-navy">{item.value}</p>
+              <p className="mt-3 text-sm text-gray-500">{item.description}</p>
             </StaggerCard>
           ))}
         </StaggerGrid>
@@ -508,11 +508,11 @@ export default function LandingPage() {
           {steps.map((step) => (
             <StaggerCard
               key={step.n}
-              className="rounded-3xl border border-slate-200 p-8 shadow-sm"
+              className="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm"
             >
-              <p className="text-sm font-semibold text-slate-500">{step.n}</p>
-              <h3 className="mt-3 text-xl font-semibold">{step.title}</h3>
-              <p className="mt-3 leading-7 text-slate-600">{step.text}</p>
+              <p className="text-sm font-semibold text-gray-400">{step.n}</p>
+              <h3 className="mt-3 text-xl font-semibold text-navy">{step.title}</h3>
+              <p className="mt-3 text-gray-500">{step.text}</p>
             </StaggerCard>
           ))}
         </StaggerGrid>
@@ -521,7 +521,7 @@ export default function LandingPage() {
       {/* ── PROPUESTA DE VALOR ── */}
       <section className="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
         <FadeInWhenVisible>
-          <div className="rounded-[2rem] bg-slate-950 p-8 shadow-sm lg:p-12">
+          <div className="rounded-[2rem] bg-navy-mid p-8 shadow-sm lg:p-12">
             <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
               <div>
                 <SectionTitle
@@ -534,19 +534,19 @@ export default function LandingPage() {
               <StaggerGrid className="grid gap-4">
                 <StaggerCard className="rounded-2xl bg-white/10 p-5">
                   <p className="font-semibold text-white">Menos carga manual</p>
-                  <p className="mt-2 text-sm text-slate-300">
+                  <p className="mt-2 text-sm text-blue-100/80">
                     Reducimos trabajo repetitivo para liberar tiempo del equipo.
                   </p>
                 </StaggerCard>
                 <StaggerCard className="rounded-2xl bg-white/10 p-5">
                   <p className="font-semibold text-white">Menos errores</p>
-                  <p className="mt-2 text-sm text-slate-300">
+                  <p className="mt-2 text-sm text-blue-100/80">
                     Estandarizamos tareas y mejoramos la consistencia operativa.
                   </p>
                 </StaggerCard>
                 <StaggerCard className="rounded-2xl bg-white/10 p-5">
                   <p className="font-semibold text-white">Más escalabilidad</p>
-                  <p className="mt-2 text-sm text-slate-300">
+                  <p className="mt-2 text-sm text-blue-100/80">
                     Preparamos el negocio para crecer sin ampliar estructura al
                     mismo ritmo.
                   </p>
@@ -560,7 +560,7 @@ export default function LandingPage() {
       {/* ── FAQ ── */}
       <section
         id="faq"
-        className="mx-auto max-w-7xl border-t border-slate-200 px-6 py-20 lg:px-8"
+        className="mx-auto max-w-7xl border-t border-gray-200 px-6 py-20 lg:px-8"
       >
         <FadeInWhenVisible>
           <SectionTitle eyebrow="FAQ" title="Preguntas frecuentes" />
@@ -572,18 +572,18 @@ export default function LandingPage() {
               return (
                 <div
                   key={item.q}
-                  className="overflow-hidden rounded-3xl border border-slate-200 shadow-sm"
+                  className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm"
                 >
                   <button
                     type="button"
                     onClick={() => setOpenFaq(isOpen ? null : i)}
                     className="flex w-full items-center justify-between px-6 py-5 text-left"
                   >
-                    <span className="text-base font-semibold">{item.q}</span>
+                    <span className="text-base font-semibold text-navy">{item.q}</span>
                     <motion.span
                       animate={{ rotate: isOpen ? 45 : 0 }}
                       transition={{ duration: 0.25, ease: "easeOut" }}
-                      className="ml-4 shrink-0 text-slate-400"
+                      className="ml-4 shrink-0 text-gray-400"
                     >
                       <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -599,7 +599,7 @@ export default function LandingPage() {
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.3, ease: "easeOut" }}
                       >
-                        <p className="px-6 pb-5 leading-7 text-slate-600">{item.a}</p>
+                        <p className="px-6 pb-5 text-gray-500">{item.a}</p>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -611,17 +611,17 @@ export default function LandingPage() {
       </section>
 
       {/* ── CONTACTO ── */}
-      <section id="contacto" className="border-t border-slate-200 bg-white">
+      <section id="contacto" className="border-t border-gray-200 bg-white">
         <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
           <FadeInWhenVisible>
             <div className="max-w-3xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
                 Contacto
               </p>
-              <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">
+              <h2 className="mt-3 text-3xl font-semibold text-navy sm:text-4xl">
                 Solicita un diagnóstico inicial
               </h2>
-              <p className="mt-4 text-lg text-slate-600">
+              <p className="mt-4 text-lg text-gray-500">
                 Revisamos tus procesos, detectamos oportunidades de
                 automatización y te proponemos un plan de implementación claro.
               </p>
@@ -638,14 +638,14 @@ export default function LandingPage() {
                 name="nombre"
                 value={formData.nombre}
                 onChange={handleChange}
-                className="rounded-2xl border border-slate-300 px-4 py-3 outline-none ring-0"
+                className="rounded-2xl border border-gray-200 px-4 py-3 text-navy outline-none ring-0 placeholder:text-gray-400"
                 placeholder="Nombre"
               />
               <input
                 name="empresa"
                 value={formData.empresa}
                 onChange={handleChange}
-                className="rounded-2xl border border-slate-300 px-4 py-3 outline-none ring-0"
+                className="rounded-2xl border border-gray-200 px-4 py-3 text-navy outline-none ring-0 placeholder:text-gray-400"
                 placeholder="Empresa"
               />
               <input
@@ -653,21 +653,21 @@ export default function LandingPage() {
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="rounded-2xl border border-slate-300 px-4 py-3 outline-none ring-0 md:col-span-2"
+                className="rounded-2xl border border-gray-200 px-4 py-3 text-navy outline-none ring-0 placeholder:text-gray-400 md:col-span-2"
                 placeholder="Email profesional"
               />
               <textarea
                 name="mensaje"
                 value={formData.mensaje}
                 onChange={handleChange}
-                className="min-h-[140px] rounded-2xl border border-slate-300 px-4 py-3 outline-none ring-0 md:col-span-2"
+                className="min-h-[140px] rounded-2xl border border-gray-200 px-4 py-3 text-navy outline-none ring-0 placeholder:text-gray-400 md:col-span-2"
                 placeholder="Cuéntanos qué área o proceso quieres mejorar"
               />
               <div className="flex flex-col gap-3 md:col-span-2">
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="w-fit rounded-2xl bg-slate-900 px-6 py-3 text-sm font-medium text-white shadow-lg transition hover:-translate-y-px disabled:opacity-60 disabled:cursor-not-allowed disabled:translate-y-0"
+                  className="w-fit rounded-md bg-navy px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-navy-mid hover:-translate-y-px disabled:opacity-60 disabled:cursor-not-allowed disabled:translate-y-0"
                 >
                   {status === "loading" ? "Enviando..." : "Enviar solicitud"}
                 </button>
@@ -679,7 +679,7 @@ export default function LandingPage() {
                     Solicitud recibida, te contactamos en menos de 48h
                   </p>
                 ) : null}
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-gray-400">
                   Tus datos se usan únicamente para contactarte. No los
                   compartimos con terceros.
                 </p>
@@ -690,18 +690,18 @@ export default function LandingPage() {
       </section>
 
       {/* ── CTA FINAL ── */}
-      <section className="bg-slate-950">
+      <section className="bg-navy-mid">
         <FadeInWhenVisible>
           <div className="mx-auto max-w-7xl px-6 py-24 text-center lg:px-8">
             <h2 className="text-3xl font-semibold text-white sm:text-4xl">
               ¿Listo para automatizar tu empresa?
             </h2>
-            <p className="mt-4 text-lg text-slate-300">
+            <p className="mt-4 text-lg text-blue-100/80">
               El diagnóstico inicial es gratuito y sin compromiso.
             </p>
             <a
               href="#contacto"
-              className="mt-10 inline-block rounded-2xl bg-white px-8 py-4 text-sm font-semibold text-slate-900 shadow-lg transition hover:-translate-y-px"
+              className="mt-10 inline-block rounded-md bg-white px-8 py-4 text-sm font-semibold text-navy shadow-sm transition hover:-translate-y-px hover:bg-gray-100"
             >
               Solicitar diagnóstico
             </a>
@@ -710,30 +710,24 @@ export default function LandingPage() {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer className="border-t border-slate-200 bg-slate-50">
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-8 text-sm text-slate-600 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+      <footer className="border-t border-gray-200 bg-white">
+        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-8 text-sm text-gray-500 lg:flex-row lg:items-center lg:justify-between lg:px-8">
           <div>
-            <p className="font-semibold text-slate-900">AgencIA</p>
+            <p className="font-semibold text-navy">AgencIA</p>
             <p>Automatización inteligente para empresas.</p>
             <div className="mt-2 flex flex-col gap-1">
-              <a
-                href="mailto:hola@agencia-ia.com"
-                className="hover:text-slate-900"
-              >
+              <a href="mailto:hola@agencia-ia.com" className="hover:text-navy">
                 hola@agencia-ia.com
               </a>
-              <a
-                href="#"
-                className="hover:text-slate-900"
-              >
+              <a href="#" className="hover:text-navy">
                 LinkedIn
               </a>
             </div>
           </div>
           <div className="flex gap-6">
-            <a href="#servicios" className="hover:text-slate-900">Servicios</a>
-            <a href="#faq" className="hover:text-slate-900">FAQ</a>
-            <a href="#contacto" className="hover:text-slate-900">Contacto</a>
+            <a href="#servicios" className="hover:text-navy">Servicios</a>
+            <a href="#faq" className="hover:text-navy">FAQ</a>
+            <a href="#contacto" className="hover:text-navy">Contacto</a>
           </div>
         </div>
       </footer>
