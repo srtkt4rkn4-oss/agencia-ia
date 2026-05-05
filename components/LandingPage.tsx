@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, useEffect, useRef } from "react";
-import { motion, useScroll, useInView, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useInView, useTransform, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import FadeInWhenVisible from "./FadeInWhenVisible";
 
 // ── Data ─────────────────────────────────────────────────────────────────────
@@ -389,6 +389,146 @@ function AutomationFlow() {
   );
 }
 
+// ── Método Apple-scroll ───────────────────────────────────────────────────────
+
+function MetodoApple() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"],
+  });
+
+  const [activeIdx, setActiveIdx] = useState(0);
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    setActiveIdx(Math.min(3, Math.floor(v * 4 + 0.05)));
+  });
+
+  // Per-step opacity
+  const op0 = useTransform(scrollYProgress, [0, 0, 0.2, 0.27], [1, 1, 1, 0]);
+  const op1 = useTransform(scrollYProgress, [0.23, 0.3, 0.45, 0.52], [0, 1, 1, 0]);
+  const op2 = useTransform(scrollYProgress, [0.48, 0.55, 0.7, 0.77], [0, 1, 1, 0]);
+  const op3 = useTransform(scrollYProgress, [0.73, 0.8, 1, 1], [0, 1, 1, 1]);
+
+  // Per-step vertical movement — reduced for elegance
+  const y0 = useTransform(scrollYProgress, [0, 0.2, 0.27], [0, 0, -44]);
+  const y1 = useTransform(scrollYProgress, [0.23, 0.3, 0.45, 0.52], [44, 0, 0, -44]);
+  const y2 = useTransform(scrollYProgress, [0.48, 0.55, 0.7, 0.77], [44, 0, 0, -44]);
+  const y3 = useTransform(scrollYProgress, [0.73, 0.8, 1], [44, 0, 0]);
+
+  // Per-step blur — fades in sharp, exits blurred
+  const bl0 = useTransform(scrollYProgress, [0, 0, 0.18, 0.25], [0, 0, 0, 5]);
+  const bl1 = useTransform(scrollYProgress, [0.23, 0.29, 0.43, 0.5], [5, 0, 0, 5]);
+  const bl2 = useTransform(scrollYProgress, [0.48, 0.54, 0.68, 0.75], [5, 0, 0, 5]);
+  const bl3 = useTransform(scrollYProgress, [0.73, 0.79, 1, 1], [5, 0, 0, 0]);
+
+  const f0 = useTransform(bl0, (v) => `blur(${v}px)`);
+  const f1 = useTransform(bl1, (v) => `blur(${v}px)`);
+  const f2 = useTransform(bl2, (v) => `blur(${v}px)`);
+  const f3 = useTransform(bl3, (v) => `blur(${v}px)`);
+
+  // Background number: slow zoom
+  const bgS0 = useTransform(scrollYProgress, [0, 0.27], [1, 1.14]);
+  const bgS1 = useTransform(scrollYProgress, [0.23, 0.27, 0.52], [0.9, 1, 1.14]);
+  const bgS2 = useTransform(scrollYProgress, [0.48, 0.52, 0.77], [0.9, 1, 1.14]);
+  const bgS3 = useTransform(scrollYProgress, [0.73, 0.77, 1], [0.9, 1, 1.12]);
+
+  // Glow blob drift
+  const blobX = useTransform(
+    scrollYProgress,
+    [0, 0.25, 0.5, 0.75, 1],
+    ["22%", "65%", "30%", "60%", "40%"]
+  );
+  const blobY = useTransform(scrollYProgress, [0, 0.5, 1], ["48%", "55%", "45%"]);
+
+  // Progress bar
+  const progressW = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  const opacities = [op0, op1, op2, op3];
+  const yOffsets  = [y0, y1, y2, y3];
+  const filters   = [f0, f1, f2, f3];
+  const bgScales  = [bgS0, bgS1, bgS2, bgS3];
+
+  return (
+    <section ref={sectionRef} id="metodo" className="relative h-[500vh]">
+      <div className="sticky top-0 h-screen overflow-hidden bg-navy">
+
+        {/* Top gradient — blends with the light section above */}
+        <div
+          className="pointer-events-none absolute top-0 left-0 right-0 z-20 h-28"
+          style={{ background: "linear-gradient(to bottom, #F8F9FC 0%, transparent 100%)" }}
+        />
+
+        {/* Bottom gradient — blends toward navy-mid below */}
+        <div
+          className="pointer-events-none absolute bottom-0 left-0 right-0 z-20 h-28"
+          style={{ background: "linear-gradient(to top, #1E3A5F 0%, transparent 100%)" }}
+        />
+
+        {/* Glow blob */}
+        <motion.div
+          className="pointer-events-none absolute h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/[0.22] blur-[120px]"
+          style={{ left: blobX, top: blobY }}
+        />
+
+        {/* Eyebrow */}
+        <div className="absolute top-10 left-0 right-0 z-10 flex justify-center">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.38em] text-white/25">
+            Método
+          </p>
+        </div>
+
+        {/* Huge decorative numbers */}
+        {steps.map((step, i) => (
+          <motion.div
+            key={`bg-${step.n}`}
+            className="pointer-events-none absolute inset-0 flex items-center justify-center select-none"
+            style={{ opacity: opacities[i], scale: bgScales[i] }}
+          >
+            <span className="text-[38vw] font-black leading-none text-white/[0.04] tabular-nums">
+              {step.n}
+            </span>
+          </motion.div>
+        ))}
+
+        {/* Step content */}
+        <div className="relative z-10 flex h-full items-center justify-center px-6 text-center">
+          {steps.map((step, i) => (
+            <motion.div
+              key={step.n}
+              className="absolute max-w-lg px-4"
+              style={{ opacity: opacities[i], y: yOffsets[i], filter: filters[i] }}
+            >
+              <h3 className="text-4xl font-semibold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl">
+                {step.title}
+              </h3>
+              <p className="mx-auto mt-5 max-w-md text-base leading-relaxed text-white/50 sm:text-lg">
+                {step.text}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Step indicator pills */}
+        <div className="absolute bottom-12 left-0 right-0 z-30 flex justify-center gap-2">
+          {steps.map((_, i) => (
+            <div
+              key={i}
+              className={`h-[3px] rounded-full transition-all duration-500 ease-out ${
+                i === activeIdx ? "w-8 bg-blue-300" : "w-2 bg-white/20"
+              }`}
+            />
+          ))}
+        </div>
+
+        {/* Progress line */}
+        <div className="absolute bottom-0 left-0 right-0 z-30 h-px bg-white/[0.08]">
+          <motion.div className="h-full bg-blue-300/60" style={{ width: progressW }} />
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function LandingPage() {
@@ -672,29 +812,10 @@ export default function LandingPage() {
       </section>
 
       {/* ── MÉTODO ── */}
-      <section id="metodo" className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
-        <FadeInWhenVisible>
-          <SectionTitle
-            eyebrow="Método"
-            title="Un proceso claro para implantar IA sin fricción"
-          />
-        </FadeInWhenVisible>
-        <StaggerGrid className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {steps.map((step) => (
-            <StaggerCard
-              key={step.n}
-              className="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm"
-            >
-              <p className="text-sm font-semibold text-gray-400">{step.n}</p>
-              <h3 className="mt-3 text-xl font-semibold text-navy">{step.title}</h3>
-              <p className="mt-3 text-gray-500">{step.text}</p>
-            </StaggerCard>
-          ))}
-        </StaggerGrid>
-      </section>
+      <MetodoApple />
 
       {/* ── PROPUESTA DE VALOR ── */}
-      <section className="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
+      <section className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
         <FadeInWhenVisible>
           <div className="rounded-[2rem] bg-navy-mid p-8 shadow-sm lg:p-12">
             <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
