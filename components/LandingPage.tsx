@@ -203,6 +203,192 @@ function StaggerCard({ children, className }: { children: React.ReactNode; class
   );
 }
 
+// ── Automation Flow (Servicios) ───────────────────────────────────────────────
+
+function FlowNodeCard({
+  service,
+  index,
+  isInView,
+}: {
+  service: (typeof services)[0];
+  index: number;
+  isInView: boolean;
+}) {
+  return (
+    <motion.div
+      className="relative flex-1 overflow-hidden rounded-2xl border border-gray-200 bg-white p-6 shadow-sm"
+      initial={{ opacity: 0, y: 24 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.55, ease: "easeOut", delay: index * 0.18 }}
+    >
+      <span className="inline-block rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-semibold text-gray-400">
+        0{index + 1}
+      </span>
+
+      <div className="relative mt-4 w-fit">
+        <motion.div
+          className="absolute -inset-2 rounded-full bg-blue-100/60"
+          animate={
+            isInView
+              ? { scale: [1, 1.7, 1], opacity: [0.5, 0, 0.5] }
+              : {}
+          }
+          transition={{
+            duration: 2.8,
+            repeat: Infinity,
+            delay: index * 0.45,
+          }}
+        />
+        <div className="relative rounded-xl bg-gray-50 p-3 text-gray-500">
+          {service.icon}
+        </div>
+      </div>
+
+      <h3 className="mt-4 text-lg font-semibold text-navy">{service.title}</h3>
+      <p className="mt-2 text-sm text-gray-500">{service.text}</p>
+
+      <motion.div
+        className="absolute bottom-0 left-0 h-[2px] w-full bg-blue-400"
+        initial={{ scaleX: 0 }}
+        animate={isInView ? { scaleX: 1 } : {}}
+        transition={{ duration: 0.7, delay: index * 0.18 + 0.45, ease: "easeOut" }}
+        style={{ originX: 0 }}
+      />
+    </motion.div>
+  );
+}
+
+function HorizontalConnector({
+  isInView,
+  delay,
+}: {
+  isInView: boolean;
+  delay: number;
+}) {
+  return (
+    <div className="relative hidden w-10 flex-shrink-0 items-center lg:flex">
+      <motion.div
+        className="w-full border-t-2 border-dashed border-gray-200"
+        initial={{ scaleX: 0 }}
+        animate={isInView ? { scaleX: 1 } : {}}
+        transition={{ duration: 0.4, delay }}
+        style={{ originX: 0 }}
+      />
+      <motion.div
+        className="absolute h-2.5 w-2.5 rounded-full bg-blue-400 shadow shadow-blue-200"
+        style={{ top: "50%", translateY: "-50%" }}
+        animate={isInView ? { x: [0, 28] } : {}}
+        transition={{
+          duration: 0.9,
+          repeat: Infinity,
+          delay: delay + 0.4,
+          ease: "linear",
+          repeatDelay: 0.8,
+        }}
+      />
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 text-gray-300">
+        <svg width="6" height="10" viewBox="0 0 6 10" fill="none">
+          <path
+            d="M1 1l4 4-4 4"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </div>
+    </div>
+  );
+}
+
+function VerticalConnector({
+  isInView,
+  delay,
+}: {
+  isInView: boolean;
+  delay: number;
+}) {
+  return (
+    <div className="relative my-1 flex h-8 justify-center lg:hidden">
+      <motion.div
+        className="w-px bg-gray-200"
+        initial={{ scaleY: 0 }}
+        animate={isInView ? { scaleY: 1 } : {}}
+        transition={{ duration: 0.3, delay }}
+        style={{ originY: 0, height: "100%" }}
+      />
+      <motion.div
+        className="absolute left-1/2 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-blue-400 shadow shadow-blue-200"
+        animate={isInView ? { y: [0, 22] } : {}}
+        transition={{
+          duration: 0.7,
+          repeat: Infinity,
+          delay: delay + 0.3,
+          ease: "linear",
+          repeatDelay: 0.6,
+        }}
+      />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-gray-300">
+        <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+          <path
+            d="M1 1l4 4 4-4"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </div>
+    </div>
+  );
+}
+
+function AutomationFlow() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+
+  return (
+    <div ref={ref} className="mt-12">
+      <motion.div
+        className="mb-6 flex items-center gap-2 text-xs text-gray-400"
+        initial={{ opacity: 0 }}
+        animate={isInView ? { opacity: 1 } : {}}
+        transition={{ duration: 0.5 }}
+      >
+        <span className="relative flex h-2 w-2">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+        </span>
+        Flujo de automatización activo
+      </motion.div>
+
+      {/* Desktop */}
+      <div className="hidden items-start lg:flex">
+        {services.map((service, i) => (
+          <span key={service.title} className="contents">
+            <FlowNodeCard service={service} index={i} isInView={isInView} />
+            {i < services.length - 1 && (
+              <HorizontalConnector isInView={isInView} delay={i * 0.18 + 0.3} />
+            )}
+          </span>
+        ))}
+      </div>
+
+      {/* Mobile / tablet */}
+      <div className="flex flex-col lg:hidden">
+        {services.map((service, i) => (
+          <span key={service.title} className="contents">
+            <FlowNodeCard service={service} index={i} isInView={isInView} />
+            {i < services.length - 1 && (
+              <VerticalConnector isInView={isInView} delay={i * 0.18 + 0.3} />
+            )}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function LandingPage() {
@@ -436,18 +622,7 @@ export default function LandingPage() {
             description="No vendemos humo ni demos bonitas. Construimos automatizaciones que encajan en el flujo real de la empresa."
           />
         </FadeInWhenVisible>
-        <StaggerGrid className="mt-12 grid gap-6 md:grid-cols-2">
-          {services.map((service) => (
-            <StaggerCard
-              key={service.title}
-              className="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm"
-            >
-              <div className="text-gray-400">{service.icon}</div>
-              <h3 className="mt-4 text-xl font-semibold text-navy">{service.title}</h3>
-              <p className="mt-3 text-gray-500">{service.text}</p>
-            </StaggerCard>
-          ))}
-        </StaggerGrid>
+        <AutomationFlow />
       </section>
 
       {/* ── CASOS DE USO ── */}
